@@ -1,0 +1,55 @@
+<mat-form-field class="example-full-width">
+    <mat-label> {{ label }}</mat-label>
+    <ng-container
+        [ngTemplateOutlet]="showWithInput ? withInput : select"
+    ></ng-container>
+
+    <ng-template #withInput>
+        <input
+            type="text"
+            placeholder="Search"
+            matInput
+            [value]="searchText"
+            [matAutocomplete]="auto"
+            (input)="searchChanged($any($event.target).value)"
+        />
+        <mat-autocomplete
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+            [displayWith]="displayValue"
+            (optionSelected)="selectItem($event.option.value?.id)"
+        >
+            <cdk-virtual-scroll-viewport
+                [itemSize]="itemSize"
+                [style.height.px]="itemSize * OPTION_HEIGHT"
+            >
+                <mat-option
+                    *cdkVirtualFor="let option of items; trackBy: trackById"
+                    [value]="option"
+                >
+                    {{ option.name }}
+                </mat-option>
+            </cdk-virtual-scroll-viewport>
+        </mat-autocomplete>
+    </ng-template>
+
+    <ng-template #select>
+        <mat-select
+            name="custom"
+            [value]="selectedItemId"
+            (valueChange)="selectItem($event)"
+        >
+            <cdk-virtual-scroll-viewport
+                [itemSize]="itemSize"
+                [style.height.px]="itemSize * OPTION_HEIGHT"
+            >
+                <mat-option
+                    *cdkVirtualFor="let option of items; trackBy: trackById"
+                    [value]="option.id"
+                >
+                    {{ option.name }}
+                </mat-option>
+            </cdk-virtual-scroll-viewport>
+        </mat-select>
+    </ng-template>
+</mat-form-field>

@@ -1,0 +1,34 @@
+<div class="row">
+    <h2>with formControl</h2>
+
+    <app-custom-select
+        [formControl]="fcSelect"
+        [items]="itemsFC | async"
+        label="with formControl"
+        (searchValueChanged)="searchTextFC.next($event)"
+    />
+</div>
+
+<div class="row">
+    <h2>with ngModel</h2>
+
+    <app-custom-select
+        [ngModel]="nmSelect"
+        [items]="itemsNM | async"
+        label="with ngModel"
+        (searchValueChanged)="searchTextNM.next($event)"
+    />
+</div>
+
+<div class="row">
+    <h2>with formControlName</h2>
+
+    <form [formGroup]="formGroup">
+        <app-custom-select
+            formControlName="select"
+            [items]="itemsFCN | async"
+            label="with formControlName"
+            (searchValueChanged)="searchTextFCN.next($event)"
+        />
+    </form>
+</div>
